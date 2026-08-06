@@ -1,0 +1,32 @@
+<!--
+  @file products.ejs
+  @description View responsável por exibir a lista de produtos cadastrados.
+  Recebe um array chamado "products" enviado pelo controller renderProducts.
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+</head>
+<body>
+
+<h1>Lista de Produtos</h1>
+
+<ul>
+    <% products.forEach(product => { %>
+        <li>
+            <strong><%= product.name %></strong>
+            <br>
+            <%= product.description %>
+            <br>
+            R$ <%= product.price %>
+        </li>
+        <hr>
+    <% }) %>
+</ul>
+
+<a href="/">Voltar</a>
+
+</body>
+</html>
