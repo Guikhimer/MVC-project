@@ -41,3 +41,9 @@ test('a página de login fica disponível sem conexão de banco', async () => {
   assert.equal(response.statusCode, 200);
   assert.match(body, /Boas-vindas/);
 });
+
+test('a tela de cadastro de produto pede login', async () => {
+  const { response } = await request('/produtos/novo');
+  assert.equal(response.statusCode, 302);
+  assert.equal(response.headers.location, '/auth/login');
+});

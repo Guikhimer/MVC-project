@@ -46,4 +46,11 @@ const requireAuth = (req, res, next) => {
   });
 };
 
-module.exports = { optionalAuth, requireAuth };
+const requirePageAuth = (req, res, next) => {
+  optionalAuth(req, res, () => {
+    if (!req.user) return res.redirect('/auth/login');
+    return next();
+  });
+};
+
+module.exports = { optionalAuth, requireAuth, requirePageAuth };

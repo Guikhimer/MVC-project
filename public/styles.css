@@ -62,13 +62,16 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.55rem); letter-spacing: -.05em; margin: 8px
 .auth-card > p { color: var(--muted); line-height: 1.6; }
 .field { display: grid; gap: 7px; margin: 18px 0; }
 .field label { font-weight: 700; font-size: .9rem; }
-.field input { width: 100%; padding: 12px 13px; border: 1px solid #ccd5e3; border-radius: 8px; color: var(--ink); font: inherit; }
-.field input:focus { outline: 3px solid #e3e1ff; border-color: var(--brand); }
+.field input, .field textarea { width: 100%; padding: 12px 13px; border: 1px solid #ccd5e3; border-radius: 8px; color: var(--ink); font: inherit; }
+.field textarea { min-height: 112px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: 3px solid #e3e1ff; border-color: var(--brand); }
 .auth-card .button { width: 100%; margin-top: 8px; }
+.product-form-card { width: min(100%, 620px); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-error { margin: 18px 0; padding: 11px 12px; border-radius: 8px; background: #fff2f2; color: #ae3030; font-size: .9rem; }
 .auth-footer { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: .92rem; }
 .auth-footer a { color: var(--brand); font-weight: 700; }
 .site-footer { background: #172033; color: #c5cfdf; padding: 30px 0; font-size: .88rem; }
 .footer-row { display: flex; justify-content: space-between; gap: 16px; }
 .footer-row a { color: #fff; }
-@media (max-width: 760px) { .nav-links { display: none; } .hero { padding: 58px 0; } .hero-grid, .cards, .product-grid { grid-template-columns: 1fr; } .hero-grid { gap: 34px; } .metric-card { max-width: 410px; } .section-heading, .footer-row { align-items: flex-start; flex-direction: column; } .user-name { display: none; } }
+@media (max-width: 760px) { .nav-links { display: none; } .hero { padding: 58px 0; } .hero-grid, .cards, .product-grid, .form-row { grid-template-columns: 1fr; } .hero-grid { gap: 34px; } .metric-card { max-width: 410px; } .section-heading, .footer-row { align-items: flex-start; flex-direction: column; } .user-name { display: none; } }

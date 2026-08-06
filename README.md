@@ -42,6 +42,8 @@ Nunca versione ou compartilhe o arquivo `.env`. Para produção, use uma senha e
 | GET | `/api/products/view` | Catálogo renderizado |
 | GET | `/auth/cadastro` | Tela de cadastro |
 | GET | `/auth/login` | Tela de login |
+| GET | `/produtos/novo` | Tela de cadastro de produto (requer login) |
+| POST | `/produtos` | Salva o produto preenchido no formulário (requer login) |
 | POST | `/auth/register` | Cria uma conta e inicia a sessão |
 | POST | `/auth/login` | Inicia a sessão JWT |
 | POST | `/auth/logout` | Encerra a sessão |

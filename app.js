@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
+const storeRoutes = require('./routes/storeRoutes');
 const { optionalAuth } = require('./middleware/auth');
 
 const app = express();
@@ -27,6 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/produtos', storeRoutes);
 app.use('/api/products', productRoutes);
 
 app.get('/health', (req, res) => {

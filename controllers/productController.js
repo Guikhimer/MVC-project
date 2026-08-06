@@ -30,6 +30,51 @@ const renderProducts = async (req, res) => {
   }
 };
 
+const renderProductForm = (req, res, error = null, product = {}) => {
+  res.render('product-form', {
+    page: 'new-product',
+    error,
+    product: {
+      name: product.name || '',
+      description: product.description || '',
+      price: product.price || '',
+      stock: product.stock ?? 0,
+    },
+  });
+};
+
+const renderNewProduct = (req, res) => renderProductForm(req, res);
+
+const createProductFromForm = async (req, res) => {
+  const { name, description, price, stock } = req.body;
+  const parsedPrice = Number(price);
+  const parsedStock = stock === '' || stock === undefined ? 0 : Number(stock);
+
+  if (!name?.trim() || !description?.trim() || !Number.isFinite(parsedPrice) || parsedPrice < 0 || !Number.isInteger(parsedStock) || parsedStock < 0) {
+    return res.status(400).render('product-form', {
+      page: 'new-product',
+      error: 'Informe nome, descrição, preço válido e estoque igual ou maior que zero.',
+      product: { name, description, price, stock },
+    });
+  }
+
+  try {
+    await Product.createProduct({
+      name: name.trim(),
+      description: description.trim(),
+      price: parsedPrice,
+      stock: parsedStock,
+    });
+    return res.redirect('/api/products/view');
+  } catch {
+    return res.status(500).render('product-form', {
+      page: 'new-product',
+      error: 'Não foi possível cadastrar o produto. Tente novamente.',
+      product: { name, description, price, stock },
+    });
+  }
+};
+
 /**
  * @module productController
  * @description Controller responsável por interceptar requisições HTTP relacionadas
@@ -231,5 +276,7 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  renderProducts
+  renderProducts,
+  renderNewProduct,
+  createProductFromForm,
 };
