@@ -19,7 +19,7 @@ const Product = require('../models/Product');
  */
 const renderProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.findAll();
 
     res.render('products', {
       products

@@ -1,17 +1,14 @@
 require('dotenv').config();
-const express = require('express');
-const connectDB = require('./src/config/db');
+const app = require('./app');
+const connectDB = require('./config/database');
 
-const app = express();
+const startServer = async () => {
+  await connectDB();
 
-connectDB();
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+  });
+};
 
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('API rodando');
-});
-
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
-});
+startServer();

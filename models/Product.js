@@ -61,8 +61,6 @@ const productSchema = new mongoose.Schema(
  * // Buscar todos os produtos
  * const products = await Product.findAll();
  */
-const Product = mongoose.model('Product', productSchema);
-
 /**
  * Retorna todos os produtos ativos cadastrados no banco de dados.
  * @async
@@ -146,4 +144,5 @@ productSchema.statics.softDelete = async function (id) {
   return this.findByIdAndUpdate(id, { active: false }, { new: true });
 };
 
-module.exports = Product;
+// Os métodos estáticos precisam ser definidos antes de compilar o model.
+module.exports = mongoose.model('Product', productSchema);
