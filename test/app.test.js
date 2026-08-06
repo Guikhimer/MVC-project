@@ -30,10 +30,10 @@ test('a aplicação responde ao health check sem conexão externa', async () => 
   assert.deepEqual(JSON.parse(body), { status: 'ok' });
 });
 
-test('a rota inicial renderiza a view EJS', async () => {
-  const { response, body } = await request('/');
-  assert.equal(response.statusCode, 200);
-  assert.match(body, /Produtos que fazem parte do seu próximo passo/);
+test('a rota inicial exige login', async () => {
+  const { response } = await request('/');
+  assert.equal(response.statusCode, 302);
+  assert.equal(response.headers.location, '/auth/login');
 });
 
 test('a página de login fica disponível sem conexão de banco', async () => {

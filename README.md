@@ -5,6 +5,7 @@ Aplicação monolítica MVC com Node.js, Express, EJS e MongoDB Atlas. O mesmo s
 ## Recursos
 
 - Interface responsiva renderizada com EJS.
+- Fluxo inicial de login/cadastro antes do acesso à vitrine.
 - Catálogo de produtos persistido no MongoDB Atlas.
 - Cadastro, login e logout de usuários.
 - Senhas protegidas com Bcrypt.

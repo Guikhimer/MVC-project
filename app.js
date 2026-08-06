@@ -24,6 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(optionalAuth);
 
 app.get('/', (req, res) => {
+  if (!req.user) return res.redirect('/auth/login');
   res.render('index', { page: 'home' });
 });
 

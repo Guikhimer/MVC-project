@@ -1,13 +1,13 @@
 <header class="site-header">
   <nav class="container nav" aria-label="Navegação principal">
     <a class="brand" href="/">Vitrine<span>.</span></a>
-    <div class="nav-links"><a href="/">Início</a><a href="/api/products/view">Produtos</a><a href="/health">Status</a></div>
+    <% if (!['login', 'register'].includes(page)) { %><div class="nav-links"><a href="/">Início</a><a href="/api/products/view">Produtos</a><a href="/health">Status</a></div><% } %>
     <div class="nav-actions">
       <% if (user) { %>
         <span class="user-name">Olá, <%= user.name %></span>
         <a class="button button-outline" href="/produtos/novo">Novo produto</a>
         <form class="inline-form" action="/auth/logout" method="post"><button class="button button-outline" type="submit">Sair</button></form>
-      <% } else { %>
+      <% } else if (!['login', 'register'].includes(page)) { %>
         <a class="button button-outline" href="/auth/login">Entrar</a>
         <a class="button" href="/auth/cadastro">Criar conta</a>
       <% } %>

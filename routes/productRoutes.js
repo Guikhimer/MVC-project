@@ -8,9 +8,9 @@ const {
   deleteProduct,
   renderProducts
 } = require('../controllers/productController');
-const { requireAuth } = require('../middleware/auth');
+const { requireAuth, requirePageAuth } = require('../middleware/auth');
 
-router.get('/view', renderProducts);
+router.get('/view', requirePageAuth, renderProducts);
 
 // GET    /api/products        -> Lista todos os produtos
 // POST   /api/products        -> Cria um novo produto
