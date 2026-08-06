@@ -1,16 +1,50 @@
-<!--
-  @file index.ejs
-  @description Página inicial da aplicação MVC.
-  Apresenta uma mensagem de boas-vindas e um link para a listagem de produtos.
--->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>MVC Products</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de produtos construído em arquitetura MVC.">
+  <title>Vitrine | Produtos selecionados</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>Bem-vindo ao Projeto MVC</h1>
-    <a href="/api/products/view">Ver Produtos</a>
+  <%- include('partials/header', { page }) %>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Catálogo digital</span>
+          <h1>Produtos que fazem parte do seu próximo passo.</h1>
+          <p class="lead">Uma vitrine simples, segura e rápida. Navegue pelos produtos cadastrados e conheça uma aplicação renderizada no servidor com Node.js, Express e EJS.</p>
+          <div class="hero-actions">
+            <a class="button" href="/api/products/view">Explorar produtos</a>
+            <% if (!user) { %><a class="button button-outline" href="/auth/cadastro">Criar conta</a><% } %>
+          </div>
+        </div>
+        <aside class="metric-card" aria-label="Resumo da plataforma">
+          <strong>MVC</strong>
+          <p>Interface renderizada no servidor e dados persistidos no MongoDB Atlas.</p>
+          <div class="metric-row">
+            <div><b>JWT</b>sessão protegida</div>
+            <div><b>Atlas</b>banco em nuvem</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">Construído para produção</span><h2>Uma base direta e confiável.</h2></div>
+          <p>Segurança e experiência reunidas em uma única aplicação monolítica.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">✓</div><h3>Catálogo persistente</h3><p>Os produtos são guardados no MongoDB Atlas e exibidos em páginas EJS renderizadas pelo servidor.</p></article>
+          <article class="card"><div class="card-icon">↗</div><h3>Acesso seguro</h3><p>Contas usam senha com hash Bcrypt e sessão JWT armazenada em cookie HTTP-only.</p></article>
+          <article class="card"><div class="card-icon">◌</div><h3>Pronta para a nuvem</h3><p>O projeto usa porta dinâmica, health check e variáveis de ambiente para publicação no Render.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <%- include('partials/footer') %>
 </body>
 </html>

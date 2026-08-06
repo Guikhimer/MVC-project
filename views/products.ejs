@@ -1,32 +1,32 @@
-<!--
-  @file products.ejs
-  @description View responsável por exibir a lista de produtos cadastrados.
-  Recebe um array chamado "products" enviado pelo controller renderProducts.
--->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Produtos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos | Vitrine</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-
-<h1>Lista de Produtos</h1>
-
-<ul>
-    <% products.forEach(product => { %>
-        <li>
-            <strong><%= product.name %></strong>
-            <br>
-            <%= product.description %>
-            <br>
-            R$ <%= product.price %>
-        </li>
-        <hr>
-    <% }) %>
-</ul>
-
-<a href="/">Voltar</a>
-
+  <%- include('partials/header', { page: 'products' }) %>
+  <main>
+    <section class="page-header"><div class="container"><span class="eyebrow">Catálogo</span><h1>Produtos disponíveis</h1><p class="lead">Itens cadastrados e sincronizados com o MongoDB Atlas.</p></div></section>
+    <section class="section"><div class="container">
+      <% if (products.length) { %>
+        <div class="product-grid">
+          <% products.forEach(product => { %>
+            <article class="card product-card">
+              <span class="product-label"><%= product.stock > 0 ? 'Em estoque' : 'Sob consulta' %></span>
+              <h3><%= product.name %></h3>
+              <p><%= product.description %></p>
+              <strong class="price"><%= new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price) %></strong>
+            </article>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="card empty"><h2>A vitrine está sendo preparada.</h2><p>Entre com uma conta autenticada e utilize a API para cadastrar o primeiro produto.</p></div>
+      <% } %>
+    </div></section>
+  </main>
+  <%- include('partials/footer') %>
 </body>
 </html>

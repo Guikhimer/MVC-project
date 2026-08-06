@@ -33,5 +33,11 @@ test('a aplicação responde ao health check sem conexão externa', async () => 
 test('a rota inicial renderiza a view EJS', async () => {
   const { response, body } = await request('/');
   assert.equal(response.statusCode, 200);
-  assert.match(body, /Bem-vindo ao Projeto MVC/);
+  assert.match(body, /Produtos que fazem parte do seu próximo passo/);
+});
+
+test('a página de login fica disponível sem conexão de banco', async () => {
+  const { response, body } = await request('/auth/login');
+  assert.equal(response.statusCode, 200);
+  assert.match(body, /Boas-vindas/);
 });
