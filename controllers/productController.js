@@ -30,10 +30,12 @@ const renderProducts = async (req, res) => {
   }
 };
 
-const renderProductForm = (req, res, error = null, product = {}) => {
+const renderProductForm = (res, { error = null, product = {}, editing = false } = {}) => {
   res.render('product-form', {
-    page: 'new-product',
+    page: editing ? 'edit-product' : 'new-product',
     error,
+    editing,
+    action: editing ? `/produtos/${product._id}` : '/produtos',
     product: {
       name: product.name || '',
       description: product.description || '',
@@ -43,7 +45,7 @@ const renderProductForm = (req, res, error = null, product = {}) => {
   });
 };
 
-const renderNewProduct = (req, res) => renderProductForm(req, res);
+const renderNewProduct = (req, res) => renderProductForm(res);
 
 const createProductFromForm = async (req, res) => {
   const { name, description, price, stock } = req.body;
@@ -51,8 +53,7 @@ const createProductFromForm = async (req, res) => {
   const parsedStock = stock === '' || stock === undefined ? 0 : Number(stock);
 
   if (!name?.trim() || !description?.trim() || !Number.isFinite(parsedPrice) || parsedPrice < 0 || !Number.isInteger(parsedStock) || parsedStock < 0) {
-    return res.status(400).render('product-form', {
-      page: 'new-product',
+    return renderProductForm(res.status(400), {
       error: 'Informe nome, descrição, preço válido e estoque igual ou maior que zero.',
       product: { name, description, price, stock },
     });
@@ -67,12 +68,62 @@ const createProductFromForm = async (req, res) => {
     });
     return res.redirect('/api/products/view');
   } catch {
-    return res.status(500).render('product-form', {
-      page: 'new-product',
+    return renderProductForm(res.status(500), {
       error: 'Não foi possível cadastrar o produto. Tente novamente.',
       product: { name, description, price, stock },
     });
   }
+};
+
+const renderEditProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.redirect('/api/products/view');
+    return renderProductForm(res, { product, editing: true });
+  } catch {
+    return res.redirect('/api/products/view');
+  }
+};
+
+const updateProductFromForm = async (req, res) => {
+  const { name, description, price, stock } = req.body;
+  const parsedPrice = Number(price);
+  const parsedStock = stock === '' || stock === undefined ? 0 : Number(stock);
+  const product = { _id: req.params.id, name, description, price, stock };
+
+  if (!name?.trim() || !description?.trim() || !Number.isFinite(parsedPrice) || parsedPrice < 0 || !Number.isInteger(parsedStock) || parsedStock < 0) {
+    return renderProductForm(res.status(400), {
+      error: 'Informe nome, descrição, preço válido e estoque igual ou maior que zero.',
+      product,
+      editing: true,
+    });
+  }
+
+  try {
+    const updatedProduct = await Product.updateProduct(req.params.id, {
+      name: name.trim(),
+      description: description.trim(),
+      price: parsedPrice,
+      stock: parsedStock,
+    });
+    if (!updatedProduct) return res.redirect('/api/products/view');
+    return res.redirect('/api/products/view');
+  } catch {
+    return renderProductForm(res.status(500), {
+      error: 'Não foi possível atualizar o produto. Tente novamente.',
+      product,
+      editing: true,
+    });
+  }
+};
+
+const deleteProductFromForm = async (req, res) => {
+  try {
+    await Product.softDelete(req.params.id);
+  } catch {
+    // A listagem permanece disponível mesmo se o item já tiver sido removido.
+  }
+  return res.redirect('/api/products/view');
 };
 
 /**
@@ -279,4 +330,7 @@ module.exports = {
   renderProducts,
   renderNewProduct,
   createProductFromForm,
+  renderEditProduct,
+  updateProductFromForm,
+  deleteProductFromForm,
 };

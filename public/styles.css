@@ -55,6 +55,10 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.55rem); letter-spacing: -.05em; margin: 8px
 .product-card h3 { margin: 18px 0 8px; letter-spacing: -.035em; font-size: 1.2rem; }
 .product-card p { flex: 1; }
 .price { display: block; margin-top: 20px; font-size: 1.35rem; font-weight: 800; letter-spacing: -.04em; }
+.card-actions { display: flex; gap: 8px; margin-top: 18px; }
+.button-small { padding: 8px 11px; font-size: .84rem; }
+.button-danger { background: #c84141; }
+.button-danger:hover { background: #a93030; }
 .empty { text-align: center; padding: 50px 24px; color: var(--muted); }
 .auth-wrap { display: grid; min-height: calc(100vh - 72px); place-items: center; padding: 48px 0; }
 .auth-card { width: min(100%, 460px); padding: 32px; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 45px rgba(32, 44, 70, .08); }
